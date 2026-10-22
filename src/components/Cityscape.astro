@@ -1,0 +1,63 @@
+---
+/*
+  The packaging's defining device: a line-drawn Indian skyline anchoring the
+  lower third of every box. Reused here as a horizon band so the site is
+  grounded the same way the product is.
+
+  Drawn rather than traced — the product photos show it in perspective under
+  studio lighting, so a vector redraw stays sharp at any width. Onion domes
+  with finials and balconied minarets are what make it read as Indian rather
+  than as a generic skyline.
+
+  Arches are subpaths inside each building's own `d` so fill-rule="evenodd"
+  cuts them out. As separate <path> elements they would paint over the
+  building in the same colour and vanish.
+
+  `opacity` is a prop, not a class: Astro scopes styles to a component's own
+  elements, so a parent styling `.hero__city` never reaches this SVG.
+
+  Purely decorative: aria-hidden, carries no information.
+*/
+interface Props {
+  color?: string;
+  opacity?: number;
+  class?: string;
+}
+const { color = 'currentColor', opacity = 1, class: className = '' } = Astro.props;
+---
+
+<svg
+  class={`cityscape ${className}`}
+  viewBox="0 0 1240 112"
+  preserveAspectRatio="xMidYMax meet"
+  role="presentation"
+  aria-hidden="true"
+  focusable="false"
+  style={`--city-color:${color};--city-opacity:${opacity}`}
+>
+  <g fill="var(--city-color)" fill-rule="evenodd">
+    <path d="M63,112 v-58 h10 v58 Z M56,54 h24 v-3 h-24 Z M60,50 C60,40 60,35 65,32 C67,32 69,32 71,32 C76,35 76,40 76,50 Z M66,31 h4 l-1,-5 h-2 Z M67,26 h2 l-1,-7 Z"/>
+    <path d="M108,112 v-54 h124 v54 Z M115,112 v-16 Q115,80 124,80 Q132,80 132,96 v16 Z M146,112 v-16 Q146,80 154,80 Q163,80 163,96 v16 Z M177,112 v-16 Q177,80 186,80 Q194,80 194,96 v16 Z M208,112 v-16 Q208,80 216,80 Q225,80 225,96 v16 Z"/>
+    <path d="M251,112 v-48 h98 v48 Z M252,64 C252,34 256,21 284,14 C293,12 307,12 316,14 C344,21 348,34 348,64 Z M298,10 h4 l-1,-8 h-2 Z M299,2 h2 l-1,-10 Z"/>
+    <path d="M244,112 v-43 h7 v43 Z M239,69 h18 v-3 h-18 Z M242,66 C242,58 242,55 246,53 C247,52 249,52 250,53 C254,55 254,58 254,66 Z M246,52 h4 l-1,-4 h-2 Z M247,48 h2 l-1,-5 Z"/>
+    <path d="M348,112 v-43 h7 v43 Z M343,69 h18 v-3 h-18 Z M346,66 C346,58 346,55 350,53 C351,52 353,52 354,53 C358,55 358,58 358,66 Z M350,52 h4 l-1,-4 h-2 Z M351,48 h2 l-1,-5 Z"/>
+    <path d="M400,112 v-44 h110 v44 Z M409,112 v-13 Q409,86 418,86 Q428,86 428,99 v13 Z M445,112 v-13 Q445,86 455,86 Q465,86 465,99 v13 Z M482,112 v-13 Q482,86 492,86 Q501,86 501,99 v13 Z"/>
+    <path d="M564,112 v-38 h72 v38 Z M565,74 C565,51 568,40 588,35 C595,33 605,33 612,35 C632,40 635,51 635,74 Z M598,32 h4 l-1,-6 h-2 Z M599,26 h2 l-1,-8 Z"/>
+    <path d="M664,112 v-48 h132 v48 Z M672,112 v-14 Q672,83 680,83 Q689,83 689,98 v14 Z M705,112 v-14 Q705,83 714,83 Q722,83 722,98 v14 Z M738,112 v-14 Q738,83 746,83 Q755,83 755,98 v14 Z M771,112 v-14 Q771,83 780,83 Q788,83 788,98 v14 Z"/>
+    <path d="M818,112 v-51 h8 v51 Z M812,61 h20 v-3 h-20 Z M815,58 C815,49 816,45 820,43 C821,42 823,42 824,43 C828,45 829,49 829,58 Z M820,41 h4 l-1,-5 h-2 Z M821,37 h2 l-1,-6 Z"/>
+    <path d="M861,112 v-42 h82 v42 Z M862,70 C862,45 865,33 888,27 C896,25 908,25 916,27 C939,33 942,45 942,70 Z M900,24 h4 l-1,-7 h-2 Z M901,17 h2 l-1,-9 Z"/>
+    <path d="M962,112 v-40 h114 v40 Z M971,112 v-12 Q971,88 981,88 Q991,88 991,100 v12 Z M1009,112 v-12 Q1009,88 1019,88 Q1029,88 1029,100 v12 Z M1047,112 v-12 Q1047,88 1057,88 Q1067,88 1067,100 v12 Z"/>
+    <path d="M1104,112 v-55 h9 v55 Z M1097,57 h22 v-3 h-22 Z M1100,54 C1100,44 1101,40 1105,38 C1107,37 1109,37 1111,38 C1115,40 1116,44 1116,54 Z M1106,36 h4 l-1,-5 h-2 Z M1107,31 h2 l-1,-6 Z"/>
+    <path d="M1148,112 v-34 h92 v34 Z M1159,112 v-10 Q1159,92 1171,92 Q1183,92 1183,102 v10 Z M1205,112 v-10 Q1205,92 1217,92 Q1229,92 1229,102 v10 Z"/>
+  </g>
+</svg>
+
+<style>
+  .cityscape {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--city-color);
+    opacity: var(--city-opacity);
+  }
+</style>

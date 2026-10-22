@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import cafeDrinks from '../assets/cafe-drinks.png';
+import Cityscape from './Cityscape.astro';
+---
+
+<section class="hero">
+  <div class="hero__inner wrap">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">Indian chai, Sacramento energy</p>
+
+      <h1 class="hero__title">
+        <span class="hero__line">Good chai.</span>
+        <span class="hero__line"><em>Big</em> personality.</span>
+      </h1>
+
+      <p class="hero__lede">
+        Whole-spice blends and colourful café pours, made to slow the day down
+        and start a conversation.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#blends">Shop the blends</a>
+        <a class="btn btn--ghost" href="/menu">See what we're pouring</a>
+      </div>
+    </div>
+
+    <figure class="hero__figure">
+      <Image
+        src={cafeDrinks}
+        alt="Three iced chai drinks on a terracotta surface: a layered mango masala, a vivid blue butterfly-pea infusion with lime, and a rose-topped masala cold foam."
+        widths={[480, 768, 1100, 1448]}
+        sizes="(max-width: 900px) 92vw, 52vw"
+        loading="eager"
+        fetchpriority="high"
+        class="hero__img"
+      />
+      <figcaption class="hero__tag">
+        Mango Masala · Mystic Blue · Masala Cold Foam
+      </figcaption>
+    </figure>
+  </div>
+
+  <!-- Sits below the content in flow, not layered over it, so nothing collides. -->
+  <Cityscape class="hero__city" color="var(--ink)" opacity={0.13} />
+</section>
+
+<style>
+  .hero {
+    background: var(--cream);
+    padding-block-start: clamp(2rem, 6vw, 4.5rem);
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block-end: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* Grid and flex children default to min-width:auto, so a long word like
+     "personality." can force the track wider than the viewport. This is what
+     caused horizontal overflow on narrow screens. */
+  .hero__inner > * {
+    min-width: 0;
+  }
+
+  @media (min-width: 900px) {
+    .hero__inner {
+      grid-template-columns: 1fr 1.05fr;
+    }
+  }
+
+  .hero__eyebrow {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--burnt-orange-text);
+    margin-block-end: var(--space-m);
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    /* Scales from the container, not the viewport, so the headline cannot
+       outgrow its column. Capped below --step-5 for the same reason. */
+    font-size: clamp(2.6rem, 11cqi, 5.6rem);
+    line-height: 0.9;
+    letter-spacing: -0.015em;
+    margin-block-end: var(--space-m);
+    text-wrap: nowrap;
+  }
+
+  .hero__copy {
+    container-type: inline-size;
+  }
+
+  .hero__line {
+    display: block;
+  }
+
+  /* The single typographic flourish: "Big" in raspberry italic — the one place
+     on the page where the accent colour carries display type. The colour is
+     lifted from the Mystic Blue label. */
+  .hero__title em {
+    font-style: italic;
+    color: var(--raspberry);
+  }
+
+  .hero__lede {
+    font-size: var(--step-1);
+    max-width: 38ch;
+    margin-block-end: var(--space-l);
+    text-wrap: pretty;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8em 1.5em;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: var(--step-0);
+    text-decoration: none;
+    border: 2px solid var(--ink);
+    transition: transform 0.18s ease, background-color 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .btn--primary {
+    background: var(--raspberry);
+    color: var(--cream-light);
+    border-color: var(--raspberry);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn--ghost:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .hero__figure {
+    margin: 0;
+  }
+
+  .hero__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-l);
+    /* A defined edge rather than a photo floating free — echoes the bordered
+       label panel on every box. */
+    border: 3px solid var(--ink);
+  }
+
+  .hero__tag {
+    margin-block-start: var(--space-s);
+    font-family: var(--font-accent);
+    font-size: var(--step-0);
+    opacity: 0.7;
+    text-align: center;
+  }
+
+  /* Opacity is passed as a prop — see Cityscape.astro for why a scoped class
+     cannot reach into a child component. */
+</style>

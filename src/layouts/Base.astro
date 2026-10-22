@@ -1,0 +1,59 @@
+---
+// Self-hosted fonts: no external request on the critical path, which matters
+// because visitors load this on market cell data.
+import '@fontsource/rozha-one/400.css';
+import '@fontsource-variable/plus-jakarta-sans';
+import '../styles/tokens.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#F5E9D9" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <slot name="header" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+
+    <style>
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: var(--space-s);
+        background: var(--ink);
+        color: var(--cream);
+        padding: var(--space-xs) var(--space-s);
+        border-radius: var(--radius-s);
+        z-index: 100;
+      }
+      .skip:focus {
+        left: var(--space-s);
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Got Chaii — design tokens
+   Colours sampled from the physical packaging so the site matches the tin
+   someone buys at the stall. Contrast ratios are measured against --cream.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand colour ---------------------------------------------------- */
+  --cream: #f5e9d9;        /* box base */
+  --cream-light: #fcf7ef;  /* lifted surface, cards on cream */
+  --ink: #1e1a17;          /* wordmark + cityscape illustration — 14.43:1 */
+
+  --raspberry: #b04065;    /* Mystic Blue label — 4.66:1, AA for body text */
+  --burnt-orange: #c57229; /* Immunity Gold label — 3.02:1, large text only */
+  --amber: #c1773a;        /* Bollywood Masala label — 2.94:1, decorative only */
+  --caramel: #b66e37;      /* Autumn Breeze label — 3.33:1, large text only */
+
+  /* Darkened variants for when a warm colour must carry body-size text.
+     Never use the raw --amber / --burnt-orange for small text; they fail AA. */
+  --burnt-orange-text: #92551e; /* 4.95:1 */
+  --amber-text: #925a2c;        /* 4.71:1 */
+
+  /* Semantic aliases — prefer these in components so a palette change is
+     one edit here rather than a find-and-replace across every section. */
+  --bg: var(--cream);
+  --text: var(--ink);
+  --accent: var(--raspberry);
+  --accent-on-dark: #e8a0b8; /* raspberry lightened for use on --ink */
+
+  /* ---- Type ------------------------------------------------------------ */
+  /* Rozha One for display, Plus Jakarta Sans for body. The packaging pairs a
+     heavy display wordmark with small clean type; the site mirrors that. */
+  --font-display: 'Rozha One', 'Georgia', serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-accent: 'Kalam', cursive; /* handwritten notes, used sparingly */
+
+  /* Fluid scale. clamp() keeps display type large without overflowing phones.
+     Body stays fixed — fluid body text hurts readability more than it helps. */
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  --step-3: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
+  --step-4: clamp(2.6rem, 1.7rem + 4vw, 4.5rem);
+  --step-5: clamp(3.2rem, 1.8rem + 6.5vw, 7rem);
+
+  --leading-tight: 0.95;
+  --leading-snug: 1.2;
+  --leading-body: 1.65;
+
+  /* ---- Space ----------------------------------------------------------- */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --section-pad: clamp(3rem, 8vw, 7rem);
+
+  /* ---- Shape ----------------------------------------------------------- */
+  --radius-s: 6px;
+  --radius-m: 14px;
+  --radius-l: 28px;
+  --radius-pill: 999px;
+
+  --measure: 62ch; /* max line length for readable body copy */
+  --page-max: 1280px;
+}
+
+/* ==========================================================================
+   Reset — deliberately scoped and minimal.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100svh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400; /* Rozha One ships a single heavy weight */
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.15em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+
+.wrap {
+  width: min(100% - 2.5rem, var(--page-max));
+  margin-inline: auto;
+}
+
+/* Each section owns one background colour — the deliberate colour rhythm the
+   reference designs rely on, rather than one arbitrary band. */
+.section {
+  padding-block: var(--section-pad);
+}
+
+.section--cream { background: var(--cream); }
+.section--light { background: var(--cream-light); }
+.section--ink   { background: var(--ink); color: var(--cream); }
+.section--amber { background: var(--amber); color: var(--ink); }
+.section--rasp  { background: var(--raspberry); color: var(--cream-light); }
+
+/* Links inside dark sections need the lightened accent to stay legible. */
+.section--ink a,
+.section--rasp a {
+  color: var(--accent-on-dark);
+}
+
+.section--rasp a {
+  color: var(--cream-light);
+}
