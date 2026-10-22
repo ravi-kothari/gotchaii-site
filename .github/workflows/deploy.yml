@@ -26,7 +26,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Astro requires >=22.23.4. Pinning bare "22" resolved to 22.23.3 on
+          # the runner and failed the build, so pin a major that clears it.
+          node-version: 24
           cache: npm
 
       # `npm ci` (not `install`) so the build uses the exact locked versions.
