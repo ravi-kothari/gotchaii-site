@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "verify:ci": "rm -rf .ci-check && mkdir .ci-check && cp package.json package-lock.json astro.config.mjs tsconfig.json .ci-check/ && cp -R src public .ci-check/ && cd .ci-check && npm ci --no-audit --no-fund && npm run build && cd .. && rm -rf .ci-check && echo 'CI check passed'"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
