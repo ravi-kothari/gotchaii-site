@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/got-chaii-logo.png';
+import Social from './Social.astro';
 
 const base = import.meta.env.BASE_URL;
 const path = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
@@ -12,6 +13,7 @@ const year = 2026;
     <div class="ftr__brand">
       <Image src={logo} alt="Got Chaii" width={180} height={119} class="ftr__logo" loading="lazy" />
       <p class="ftr__tag">Indian chaii, Sacramento energy.</p>
+      <Social class="ftr__social" />
     </div>
 
     <nav class="ftr__nav" aria-label="Footer">
@@ -63,6 +65,10 @@ const year = 2026;
     font-family: var(--font-accent);
     margin-block-start: var(--space-xs);
     opacity: 0.8;
+  }
+
+  .ftr__social {
+    margin-block-start: var(--space-m);
   }
 
   .ftr__h {

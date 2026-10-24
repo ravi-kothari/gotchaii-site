@@ -60,6 +60,10 @@ const path = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`
               'Whole-spice Indian chaii blends and café pours, sold at Meadowview Farmers Market in Sacramento.',
             servesCuisine: 'Indian',
             url: Astro.site?.href,
+            sameAs: [
+              'https://instagram.com/gotchaii',
+              'https://tiktok.com/@gotchaii',
+            ],
             image: new URL(path('og-image.jpg'), Astro.site).href,
             address: {
               '@type': 'PostalAddress',
