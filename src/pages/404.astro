@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL;
+const path = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
+---
+
+<Base
+  title="Page not found — Got Chaii"
+  description="That page does not exist. Find our blends, menu and market times instead."
+  structuredData={false}
+>
+  <section class="nf">
+    <div class="wrap nf__inner">
+      <p class="nf__eyebrow">Lost your cup?</p>
+      <h1 class="nf__title">Nothing brewing here.</h1>
+      <p class="nf__lede">
+        That page does not exist. The chaii, however, very much does — every
+        Sunday at Meadowview Farmers Market, 9am to 1pm.
+      </p>
+      <div class="nf__actions">
+        <a class="nf__btn" href={path('/')}>Back to the start</a>
+        <a class="nf__link" href={path('/menu')}>See the menu</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    background: var(--cream);
+    padding-block: clamp(4rem, 14vw, 9rem);
+  }
+  .nf__inner {
+    max-width: 52ch;
+  }
+  .nf__eyebrow {
+    font-family: var(--font-accent);
+    font-size: var(--step-1);
+    color: var(--raspberry);
+  }
+  .nf__title {
+    font-size: var(--step-4);
+    margin-block: var(--space-xs) var(--space-s);
+  }
+  .nf__lede {
+    font-size: var(--step-1);
+    margin-block-end: var(--space-l);
+  }
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-m);
+  }
+  .nf__btn {
+    display: inline-block;
+    background: var(--raspberry);
+    color: var(--cream-light);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.8em 1.5em;
+    border-radius: var(--radius-pill);
+  }
+  .nf__btn:hover {
+    background: var(--ink);
+  }
+  .nf__link {
+    font-weight: 700;
+    color: var(--indigo);
+  }
+</style>

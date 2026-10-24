@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 /*
   GitHub Pages serves a project repo under a sub-path (/gotchaii-site/), but the
@@ -17,6 +18,8 @@ const base = process.env.BASE_PATH ?? '/';
 export default defineConfig({
   site,
   base,
+
+  integrations: [sitemap()],
 
   image: {
     // Source photography is heavy (one file is 2.6MB) and visitors load this on

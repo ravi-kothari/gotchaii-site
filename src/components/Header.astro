@@ -22,8 +22,15 @@ const links = [
 
 <header class="hdr">
   <div class="hdr__inner wrap">
-    <a class="hdr__brand" href={path('/')} aria-label="Got Chaii — home">
-      <Image src={logo} alt="" width={160} height={106} class="hdr__logo" loading="eager" />
+    <a class="hdr__brand" href={path('/')}>
+      <Image
+        src={logo}
+        alt="Got Chaii"
+        width={160}
+        height={106}
+        class="hdr__logo"
+        loading="eager"
+      />
     </a>
 
     <nav class="hdr__nav" aria-label="Primary">

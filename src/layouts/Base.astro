@@ -8,9 +8,11 @@ import '../styles/tokens.css';
 interface Props {
   title: string;
   description: string;
+  /** Opt out of the LocalBusiness block on pages where it does not belong. */
+  structuredData?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, structuredData = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // Astro rewrites asset imports for `base`, but NOT hand-written hrefs. Any
@@ -33,8 +35,51 @@ const path = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(path('og-image.jpg'), Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Got Chaii" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="icon" href={path("favicon.svg")} type="image/svg+xml" />
+    <link rel="icon" href={path('favicon.svg')} type="image/svg+xml" />
+
+    {
+      /*
+        LocalBusiness markup. The business sells from a market stall, so hours
+        and location are the facts worth surfacing — someone searching for chaii
+        in Sacramento can see when we are there without opening the page.
+      */
+      structuredData && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FoodEstablishment',
+            name: 'Got Chaii',
+            description:
+              'Whole-spice Indian chaii blends and café pours, sold at Meadowview Farmers Market in Sacramento.',
+            servesCuisine: 'Indian',
+            url: Astro.site?.href,
+            image: new URL(path('og-image.jpg'), Astro.site).href,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: '3501 Meadowview Rd',
+              addressLocality: 'Sacramento',
+              addressRegion: 'CA',
+              addressCountry: 'US',
+            },
+            openingHoursSpecification: [
+              {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: 'https://schema.org/Sunday',
+                opens: '09:00',
+                closes: '13:00',
+              },
+            ],
+          })}
+        />
+      )
+    }
     <slot name="head" />
   </head>
   <body>

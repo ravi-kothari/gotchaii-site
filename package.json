@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@fontsource/rozha-one": "^5.3.0",
     "astro": "^7.4.1"
