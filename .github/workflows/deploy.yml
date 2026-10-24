@@ -34,9 +34,33 @@ jobs:
       # `npm ci` (not `install`) so the build uses the exact locked versions.
       - run: npm ci
 
-      - run: npm run build
-
+      # Must run BEFORE the build: it reports the sub-path Pages will serve
+      # from, and Astro has to bake that into every asset URL at build time.
       - uses: actions/configure-pages@v5
+        id: pages
+
+      - run: npm run build
+        env:
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+
+      # Guard against the failure this workflow already shipped once: the HTML
+      # returned 200 while every stylesheet and image 404'd, because asset URLs
+      # were built for the apex instead of the project sub-path. Assert that
+      # emitted asset paths actually sit under the base path.
+      - name: Verify asset paths match the deploy base
+        run: |
+          BASE='${{ steps.pages.outputs.base_path }}'
+          echo "Pages base path: $BASE"
+          CSS=$(grep -ohE 'href="[^"]*\.css"' dist/index.html | head -1 | sed 's/href="//;s/"//')
+          echo "First stylesheet href: $CSS"
+          case "$CSS" in
+            "$BASE"*) echo "OK: stylesheet sits under the base path" ;;
+            *) echo "FAIL: '$CSS' is not under '$BASE' — assets would 404"; exit 1 ;;
+          esac
+          test -f "dist${CSS#$BASE}" || test -f "dist/${CSS#/}" \
+            || { echo "FAIL: stylesheet missing from dist"; exit 1; }
+          echo "OK: stylesheet exists in dist"
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -51,3 +75,29 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Fetch the deployed page and confirm its assets actually resolve. The
+  # build-time check above cannot catch a Pages-side path problem.
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assets resolve on the live site
+        run: |
+          URL='${{ needs.deploy.outputs.page_url }}'
+          [ -n "$URL" ] || URL="${{ steps.deployment.outputs.page_url }}"
+          [ -n "$URL" ] || URL="https://ravi-kothari.github.io/gotchaii-site/"
+          echo "Checking $URL"
+          sleep 10
+          HTML=$(curl -fsSL --retry 5 --retry-delay 6 --retry-all-errors "$URL")
+          CSS=$(printf '%s' "$HTML" | grep -ohE 'href="[^"]*\.css"' | head -1 | sed 's/href="//;s/"//')
+          [ -n "$CSS" ] || { echo "FAIL: no stylesheet referenced"; exit 1; }
+          ORIGIN=$(printf '%s' "$URL" | sed -E 's#(https?://[^/]+).*#\1#')
+          case "$CSS" in
+            http*) CSS_URL="$CSS" ;;
+            *) CSS_URL="$ORIGIN$CSS" ;;
+          esac
+          echo "Fetching $CSS_URL"
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' --retry 5 --retry-delay 6 --retry-all-errors "$CSS_URL")
+          echo "stylesheet -> $CODE"
+          [ "$CODE" = "200" ] || { echo "FAIL: stylesheet 404s; the page renders unstyled"; exit 1; }
