@@ -1,0 +1,112 @@
+---
+/*
+  Scrolling ticker of market details. Motion earns its place here: the message
+  that matters most commercially is where to find the stall, and a ticker gives
+  it presence without a whole section.
+
+  The track is duplicated so the loop is seamless; the copy is aria-hidden so
+  screen readers hear the list once, not twice.
+*/
+const items = [
+  'Every Sunday · 9am–1pm',
+  'Meadowview Farmers Market, Sacramento',
+  'Whole spices, small batches',
+  'Come say chaii',
+];
+---
+
+<div class="marquee" role="region" aria-label="Market hours and location">
+  <div class="marquee__track">
+    <ul class="marquee__list" role="list">
+      {
+        items.map((item) => (
+          <li class="marquee__item">
+            {item}
+            <span class="marquee__dot" aria-hidden="true">✦</span>
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="marquee__list" role="list" aria-hidden="true">
+      {
+        items.map((item) => (
+          <li class="marquee__item">
+            {item}
+            <span class="marquee__dot">✦</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    background: var(--indigo);
+    color: var(--cream-light);
+    overflow: hidden;
+    padding-block: 0.7rem;
+    border-block-end: 2px solid var(--ink);
+  }
+
+  .marquee__track {
+    display: flex;
+    width: max-content;
+    animation: slide 38s linear infinite;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding-inline-end: 1.6rem;
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .marquee__dot {
+    color: var(--foam);
+  }
+
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* Exactly one list-width, so the duplicate lands seamlessly. */
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Honour reduced-motion by stopping the loop rather than hiding the content. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+      width: 100%;
+      justify-content: center;
+    }
+    .marquee__list:last-child {
+      display: none;
+    }
+    .marquee__list {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+</style>

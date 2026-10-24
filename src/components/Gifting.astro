@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import giftBox from '../assets/gift-box.png';
+---
+
+<section class="gift section section--ink" id="gifting">
+  <div class="wrap gift__inner">
+    <div class="gift__copy">
+      <p class="gift__eyebrow">Chaii, beautifully gifted</p>
+      <h2 class="gift__title">Four blends,<br />one good box.</h2>
+      <p class="gift__lede">
+        All four blends in a hand-illustrated box — the Taj, the hills and the
+        botanicals drawn inside the lid. Made for housewarmings, Diwali, and
+        anyone who deserves a better cup.
+      </p>
+      <ul class="gift__points" role="list">
+        <li>Mystic Blue · Immunity Gold · Bollywood Masala · Autumn Breeze</li>
+        <li>Illustrated keepsake box</li>
+        <li>Ships flat, arrives ready to give</li>
+      </ul>
+      <a class="gift__cta" href="#find-us">Ask us at the market</a>
+    </div>
+
+    <figure class="gift__figure">
+      <Image
+        src={giftBox}
+        alt="Open Got Chaii gift box: four black sachets in a cream tray, with Indian architecture and botanicals illustrated inside the lid."
+        widths={[400, 600, 768]}
+        sizes="(max-width: 900px) 86vw, 42vw"
+        loading="lazy"
+        class="gift__img"
+      />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .gift__inner {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .gift__inner > * {
+    min-width: 0;
+  }
+
+  @media (min-width: 900px) {
+    .gift__inner {
+      grid-template-columns: 1fr 0.85fr;
+    }
+  }
+
+  .gift__eyebrow {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--foam);
+    margin-block-end: var(--space-xs);
+  }
+
+  .gift__title {
+    font-size: var(--step-4);
+    margin-block-end: var(--space-s);
+  }
+
+  .gift__lede {
+    font-size: var(--step-1);
+    max-width: 44ch;
+    margin-block-end: var(--space-m);
+  }
+
+  .gift__points {
+    list-style: none;
+    margin: 0 0 var(--space-l);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .gift__points li {
+    position: relative;
+    padding-inline-start: 1.6rem;
+    font-size: var(--step--1);
+  }
+
+  .gift__points li::before {
+    content: '✦';
+    position: absolute;
+    inset-inline-start: 0;
+    color: var(--foam);
+  }
+
+  .gift__cta {
+    display: inline-block;
+    background: var(--foam);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 800;
+    padding: 0.8em 1.5em;
+    border-radius: var(--radius-pill);
+    transition: transform 0.18s ease, background-color 0.18s ease;
+  }
+
+  .gift__cta:hover {
+    background: var(--cream);
+    transform: translateY(-2px);
+  }
+
+  .gift__figure {
+    margin: 0;
+  }
+
+  .gift__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-l);
+  }
+</style>

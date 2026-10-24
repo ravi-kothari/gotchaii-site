@@ -1,0 +1,113 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/got-chaii-logo.png';
+
+const base = import.meta.env.BASE_URL;
+const path = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
+const year = 2026;
+---
+
+<footer class="ftr">
+  <div class="wrap ftr__inner">
+    <div class="ftr__brand">
+      <Image src={logo} alt="Got Chaii" width={180} height={119} class="ftr__logo" loading="lazy" />
+      <p class="ftr__tag">Indian chaii, Sacramento energy.</p>
+    </div>
+
+    <nav class="ftr__nav" aria-label="Footer">
+      <h2 class="ftr__h">Explore</h2>
+      <ul role="list">
+        <li><a href="#blends">Blends</a></li>
+        <li><a href="#cafe">At the bar</a></li>
+        <li><a href="#gifting">Gifting</a></li>
+        <li><a href={path('/menu')}>Market menu</a></li>
+      </ul>
+    </nav>
+
+    <div class="ftr__visit">
+      <h2 class="ftr__h">Visit</h2>
+      <p>
+        Meadowview Farmers Market<br />
+        3501 Meadowview Rd, Sacramento<br />
+        <strong>Sundays 9am – 1pm</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap ftr__base">
+    <p>© {year} Got Chaii</p>
+    <p class="ftr__note">Blended in small batches.</p>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    background: var(--ink);
+    color: var(--cream);
+    padding-block: clamp(2.5rem, 6vw, 4rem) var(--space-l);
+  }
+
+  .ftr__inner {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    padding-block-end: var(--space-l);
+  }
+
+  .ftr__logo {
+    width: clamp(130px, 16vw, 180px);
+    height: auto;
+  }
+
+  .ftr__tag {
+    font-family: var(--font-accent);
+    margin-block-start: var(--space-xs);
+    opacity: 0.8;
+  }
+
+  .ftr__h {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--foam);
+    margin-block-end: var(--space-s);
+  }
+
+  .ftr__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ftr a {
+    color: var(--cream);
+    text-decoration: none;
+    border-block-end: 1.5px solid transparent;
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .ftr a:hover {
+    color: var(--foam);
+    border-block-end-color: var(--foam);
+  }
+
+  .ftr__base {
+    border-block-start: 1.5px solid rgba(245, 233, 217, 0.22);
+    padding-block-start: var(--space-m);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    justify-content: space-between;
+    font-size: var(--step--1);
+    opacity: 0.75;
+  }
+
+  .ftr__note {
+    font-family: var(--font-accent);
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+/*
+  Type-led by design. Every neighbouring section carries a large photograph, so
+  another image here would make the page read as an unbroken slideshow. This
+  section is the pause between the product tiles and the market details.
+*/
+---
+
+<section class="story section section--light" id="story">
+  <div class="wrap">
+    <div class="story__inner">
+      <p class="story__eyebrow">Why Got Chaii?</p>
+      <h2 class="story__title">
+      Rooted in India.<br /><em>Made for here.</em>
+    </h2>
+      <p class="story__lede">
+      Chaii is more than a drink. It is a welcome, a pause, and a reason to stay
+      a little longer. We blend whole spices in small batches and pour them at a
+      market stall in Sacramento — the flavor and warmth of Indian chaii, in
+      modern everyday life.
+    </p>
+
+      <ul class="story__values" role="list">
+      <li class="value">
+        <span class="value__mark" aria-hidden="true">✦</span>
+        <h3 class="value__h">Real ingredients</h3>
+        <p>Whole spices and loose-leaf tea. Nothing artificial, nothing dusty.</p>
+      </li>
+      <li class="value">
+        <span class="value__mark" aria-hidden="true">✦</span>
+        <h3 class="value__h">Indian inspiration</h3>
+        <p>Recipes built on how chaii is actually brewed, not how it is exported.</p>
+      </li>
+      <li class="value">
+        <span class="value__mark" aria-hidden="true">✦</span>
+        <h3 class="value__h">Made for connection</h3>
+        <p>Small batches, poured by hand, at a stall where we know your name.</p>
+      </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story__inner {
+    max-width: 68ch;
+  }
+
+  .story__eyebrow {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--raspberry);
+    margin-block-end: var(--space-xs);
+  }
+
+  .story__title {
+    font-size: var(--step-4);
+    margin-block-end: var(--space-m);
+  }
+
+  .story__title em {
+    font-style: italic;
+    color: var(--indigo);
+  }
+
+  .story__lede {
+    font-size: var(--step-1);
+    margin-block-end: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .story__values {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .value {
+    padding-block-start: var(--space-s);
+    border-block-start: 3px solid var(--ink);
+  }
+
+  .value__mark {
+    color: var(--burnt-orange);
+    font-size: var(--step-1);
+  }
+
+  .value__h {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-block: 0.3rem 0.35rem;
+  }
+
+  .value p {
+    font-size: var(--step--1);
+  }
+</style>

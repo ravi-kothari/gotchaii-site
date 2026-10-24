@@ -1,11 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
+import Marquee from '../components/Marquee.astro';
+import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import Blends from '../components/Blends.astro';
+import CafeBar from '../components/CafeBar.astro';
+import Gifting from '../components/Gifting.astro';
+import Story from '../components/Story.astro';
+import FindUs from '../components/FindUs.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <Base
-  title="Got Chaii — whole-spice Indian chai, Sacramento"
-  description="Whole-spice Indian chai blends and colourful café pours. Find us every Sunday at Meadowview Farmers Market, Sacramento."
+  title="Got Chaii — whole-spice Indian chaii, Sacramento"
+  description="Whole-spice Indian chaii blends and colorful café pours. Find us every Sunday at Meadowview Farmers Market, Sacramento."
 >
+  <Fragment slot="header">
+    <Marquee />
+    <Header />
+  </Fragment>
+
   <Hero />
+  <Blends />
+  <CafeBar />
+  <Gifting />
+  <Story />
+  <FindUs />
+
+  <SiteFooter slot="footer" />
 </Base>

@@ -20,6 +20,14 @@
   --burnt-orange-text: #92551e; /* 4.95:1 */
   --amber-text: #925a2c;        /* 4.71:1 */
 
+  /* ---- Drink colours ---------------------------------------------------
+     Sampled from the café photography. The packaging is deliberately
+     restrained; the drinks are where the brand's vivid colour actually
+     lives, so these carry the bold sections. */
+  --indigo: #2a43a2;  /* Mystic Blue — 7.24:1 on cream, 8.13:1 inverted */
+  --mango: #db7604;   /* Mango Masala — large text / blocks only */
+  --foam: #de8c43;    /* Masala Cold Foam — decorative only */
+
   /* Semantic aliases — prefer these in components so a palette change is
      one edit here rather than a find-and-replace across every section. */
   --bg: var(--cream);
@@ -183,13 +191,14 @@ a {
 .section--ink   { background: var(--ink); color: var(--cream); }
 .section--amber { background: var(--amber); color: var(--ink); }
 .section--rasp  { background: var(--raspberry); color: var(--cream-light); }
+.section--indigo { background: var(--indigo); color: var(--cream-light); }
 
 /* Links inside dark sections need the lightened accent to stay legible. */
-.section--ink a,
-.section--rasp a {
+.section--ink a {
   color: var(--accent-on-dark);
 }
 
-.section--rasp a {
+.section--rasp a,
+.section--indigo a {
   color: var(--cream-light);
 }

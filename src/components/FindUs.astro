@@ -1,0 +1,139 @@
+---
+import Cityscape from './Cityscape.astro';
+
+/*
+  Commercially the most important section on the page: it drives foot traffic to
+  the stall, which is where the business actually sells today.
+
+  The address links out to a maps search rather than embedding an iframe — an
+  embed would cost hundreds of kilobytes and set third-party cookies for
+  something a single link does better on a phone.
+*/
+const address = '3501 Meadowview Rd, Sacramento, CA';
+const mapsHref = `https://maps.google.com/?q=${encodeURIComponent('Meadowview Farmers Market, ' + address)}`;
+---
+
+<section class="find section section--rasp" id="find-us">
+  <div class="wrap find__inner">
+    <div class="find__copy">
+      <p class="find__eyebrow">Come find us</p>
+      <h2 class="find__title">Sunday is chaii day.</h2>
+      <p class="find__lede">
+        Come taste the blends, try a colorful pour and say hello. We are there
+        every week, rain or shine.
+      </p>
+    </div>
+
+    <div class="find__card">
+      <dl class="find__details">
+        <div class="find__row">
+          <dt>When</dt>
+          <dd><strong>Every Sunday</strong><br />9am – 1pm</dd>
+        </div>
+        <div class="find__row">
+          <dt>Where</dt>
+          <dd>
+            <strong>Meadowview Farmers Market</strong><br />
+            {address}
+          </dd>
+        </div>
+      </dl>
+      <a class="find__cta" href={mapsHref} target="_blank" rel="noopener noreferrer">
+        Get directions <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <Cityscape class="find__city" color="var(--cream-light)" opacity={0.18} />
+</section>
+
+<style>
+  .find__inner {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .find__inner > * {
+    min-width: 0;
+  }
+
+  @media (min-width: 860px) {
+    .find__inner {
+      grid-template-columns: 1fr 0.9fr;
+    }
+  }
+
+  .find__eyebrow {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-block-end: var(--space-xs);
+    opacity: 0.85;
+  }
+
+  .find__title {
+    font-size: var(--step-4);
+    margin-block-end: var(--space-s);
+  }
+
+  .find__lede {
+    font-size: var(--step-1);
+    max-width: 38ch;
+  }
+
+  .find__card {
+    background: var(--cream-light);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-l);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .find__details {
+    margin: 0 0 var(--space-l);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .find__row {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .find__row dt {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--burnt-orange-text);
+  }
+
+  .find__row dd {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+
+  .find__cta {
+    display: inline-block;
+    background: var(--indigo);
+    color: var(--cream-light);
+    text-decoration: none;
+    font-weight: 800;
+    padding: 0.8em 1.5em;
+    border-radius: var(--radius-pill);
+    transition: transform 0.18s ease, background-color 0.18s ease;
+  }
+
+  .find__cta:hover {
+    background: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .find__city {
+    margin-block-start: clamp(2rem, 5vw, 3.5rem);
+    margin-block-end: calc(var(--section-pad) * -1);
+  }
+</style>

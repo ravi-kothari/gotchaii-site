@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/got-chaii-logo.png';
+
+/*
+  The wordmark artwork is cream on a dark field, so the header bar has to be
+  dark — a light header would need a different logo file we do not have. That
+  constraint works in our favour: it opens the page on an ink block before the
+  cream hero, which is the colour rhythm the design calls for.
+*/
+const base = import.meta.env.BASE_URL;
+const path = (p: string) => `${base.replace(/\/$/, '')}/${p.replace(/^\//, '')}`;
+
+const links = [
+  { label: 'Blends', href: '#blends' },
+  { label: 'At the bar', href: '#cafe' },
+  { label: 'Gifting', href: '#gifting' },
+  { label: 'Our story', href: '#story' },
+  { label: 'Find us', href: '#find-us' },
+];
+---
+
+<header class="hdr">
+  <div class="hdr__inner wrap">
+    <a class="hdr__brand" href={path('/')} aria-label="Got Chaii — home">
+      <Image src={logo} alt="" width={160} height={106} class="hdr__logo" loading="eager" />
+    </a>
+
+    <nav class="hdr__nav" aria-label="Primary">
+      <ul class="hdr__list" role="list">
+        {
+          links.map((l) => (
+            <li>
+              <a class="hdr__link" href={l.href}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="hdr__cta" href="#blends">Shop</a>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .hdr__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    padding-block: 0.6rem;
+  }
+
+  .hdr__brand {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .hdr__logo {
+    width: clamp(96px, 13vw, 150px);
+    height: auto;
+  }
+
+  /* Below the breakpoint the links wrap under the brand rather than collapsing
+     into a hamburger — five short links fit, and a menu nobody opens is worse
+     than links they can see. */
+  .hdr__nav {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hdr__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hdr__link {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-block: 0.35rem;
+    border-block-end: 2px solid transparent;
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .hdr__link:hover {
+    color: var(--foam);
+    border-block-end-color: var(--foam);
+  }
+
+  .hdr__cta {
+    flex-shrink: 0;
+    background: var(--foam);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.6em 1.3em;
+    border-radius: var(--radius-pill);
+    transition: transform 0.18s ease, background-color 0.18s ease;
+  }
+
+  .hdr__cta:hover {
+    background: var(--cream);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 820px) {
+    .hdr__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+    .hdr__nav {
+      order: 3;
+      flex-basis: 100%;
+      padding-block-start: 0.4rem;
+    }
+  }
+</style>

@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets';
+import mysticBlue from '../assets/mystic-blue.jpg';
+import immunityGold from '../assets/immunity-gold.jpg';
+import bollywoodMasala from '../assets/bollywood-masala.jpg';
+import autumnBreeze from '../assets/autumn-breeze.jpg';
+
+/*
+  Product tiles. Price is stated once at section level rather than repeated on
+  four cards, because every blend is the same $12.99 — repeating it four times
+  is noise, not information.
+
+  Tiles are NOT colour-coded by label: three of the four package labels are
+  near-identical warm oranges, so colour-coding would read as a mistake.
+  Differentiation comes from photography and name.
+*/
+const blends = [
+  {
+    name: 'Mystic Blue',
+    kicker: 'The color-changing ritual',
+    note: 'Blue tea · 100g',
+    desc: 'A vivid botanical infusion that turns every glass into a moment.',
+    img: mysticBlue,
+    alt: 'Mystic Blue package beside a glass cup of vivid blue butterfly-pea tea.',
+  },
+  {
+    name: 'Immunity Gold',
+    kicker: 'The golden ritual',
+    note: 'Turmeric tisane · 100g',
+    desc: 'A warming turmeric tisane with layered Indian spices.',
+    img: immunityGold,
+    alt: 'Immunity Gold package beside a clay cup of golden turmeric tea.',
+  },
+  {
+    name: 'Bollywood Masala',
+    kicker: 'The lively classic',
+    note: 'Masala chaii · 250g',
+    desc: 'A joyful, full-bodied masala chaii with a warm spice finish.',
+    img: bollywoodMasala,
+    alt: 'Bollywood Masala package beside a glass of milky masala chaii and whole spices.',
+  },
+  {
+    name: 'Autumn Breeze',
+    kicker: 'The cozy seasonal cup',
+    note: 'Black apple cinnamon · 100g',
+    desc: 'Black tea, apple and cinnamon wrapped in a warm, comforting blend.',
+    img: autumnBreeze,
+    alt: 'Autumn Breeze package beside a bowl of tea with cinnamon and dried apple.',
+  },
+];
+---
+
+<section class="blends section section--indigo" id="blends">
+  <div class="wrap">
+    <header class="blends__head">
+      <p class="blends__eyebrow">Pick your mood</p>
+      <h2 class="blends__title">A chaii for every vibe.</h2>
+      <p class="blends__lede">
+        Bold, floral, grounding or bright — whole spices and botanicals, blended
+        in small batches. <strong>Every blend $12.99.</strong>
+      </p>
+    </header>
+
+    <ul class="blends__grid" role="list">
+      {
+        blends.map((b) => (
+          <li class="tile">
+            <div class="tile__media">
+              <Image
+                src={b.img}
+                alt={b.alt}
+                widths={[320, 480, 700]}
+                sizes="(max-width: 600px) 90vw, (max-width: 1000px) 44vw, 23vw"
+                loading="lazy"
+                class="tile__img"
+              />
+            </div>
+            <div class="tile__body">
+              <p class="tile__kicker">{b.kicker}</p>
+              <h3 class="tile__name">{b.name}</h3>
+              <p class="tile__desc">{b.desc}</p>
+              <p class="tile__note">{b.note}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .blends__head {
+    max-width: 46ch;
+    margin-block-end: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .blends__eyebrow {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--foam);
+    margin-block-end: var(--space-xs);
+  }
+
+  .blends__title {
+    font-size: var(--step-4);
+    margin-block-end: var(--space-s);
+  }
+
+  .blends__lede {
+    font-size: var(--step-1);
+  }
+
+  .blends__lede strong {
+    color: var(--foam);
+    white-space: nowrap;
+  }
+
+  .blends__grid {
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    margin: 0;
+    padding: 0;
+  }
+
+  .tile {
+    background: var(--cream-light);
+    color: var(--ink);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid var(--ink);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .tile:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 0 -4px rgba(30, 26, 23, 0.35);
+  }
+
+  .tile__media {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-block-end: 3px solid var(--ink);
+  }
+
+  .tile__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .tile:hover .tile__img {
+    transform: scale(1.05);
+  }
+
+  .tile__body {
+    padding: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .tile__kicker {
+    font-family: var(--font-accent);
+    font-size: var(--step-0);
+    color: var(--raspberry);
+    line-height: 1.3;
+  }
+
+  .tile__name {
+    font-size: var(--step-2);
+    line-height: 1.05;
+  }
+
+  .tile__desc {
+    font-size: var(--step--1);
+    flex: 1;
+  }
+
+  .tile__note {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--burnt-orange-text);
+    padding-block-start: var(--space-xs);
+    border-block-start: 1.5px dashed rgba(30, 26, 23, 0.3);
+  }
+</style>
